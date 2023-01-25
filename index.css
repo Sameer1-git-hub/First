@@ -1,127 +1,177 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+ @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', 'sens-serif';
 }
-body {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  padding: 0 10px;
-  background: #e3f2fd;
-}
-.wrapper {
-  /* width: 780px; */
-  border-radius: 20px;
-  padding: 35px 40px;
-  background: #141414;
-}
-.wrapper header {
-  color: #b2b2b2b2;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-header h2 {
-  font-size: 1.6rem;
-}
-header .column {
-  display: flex;
-  align-items: center;
-}
-header .column span {
-  font-weight: 500;
-  margin-right: 15px;
-  font-size: 1.19rem;
-}
-.volume-slider input {
-    outline: none;
-  accent-color: #fff;
-}
-.keys-checkbox input {
-  width: 60px;
-  height: 30px;
-  border-radius: 30px;
-  position: relative;
-  cursor: pointer;
-  background: #4b4b4b;
-  appearance: none;
-}
-
-.keys-checkbox input::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 5px;
-  border-radius: inherit;
-  background: #8c8c8c;
-  height: 20px;
-  width: 20px;
-  transform: translateY(-50%);
-  transition: all 0.3s ease;
-}
-.keys-checkbox input:checked:before{
-    left: 35px;
-    background: #fff;
-}
-.piano-keys{
+body{
     display: flex;
-    margin-top: 40px;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: #e3f2fd;
 }
-.piano-keys .key {
-  cursor: pointer;
-  list-style: none;
-  user-select: none;
-  color: #a2a2a2;
-  position: relative;
-  text-transform: uppercase;
+body, .video_controls, .video_timer, .options{
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
-.piano-keys .black{
-    width: 44px;
-    height: 140px;
-    z-index: 2;
-    margin: 0 -22px 0 -22px;
-    border-radius: 0 0 5px 5px;
-    background: linear-gradient(#333, #000);
+.container{
+    max-width: 900px;
+    width: 98%;
+    background: #000;
+    border-radius: 5px;
+    overflow: hidden;
+    position: relative;
+}
+.container.fullscreen{
+    max-width: 100%;
+    width: 100%;
+    max-height: 100vh;
+}
+.wrapper{
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -15px;
+    z-index: 1;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.08s ease;
+}
+.container.show-controls .wrapper{
+   bottom: 0px;
+    opacity: 1;
+    transition: all 0.13s ease;
+    pointer-events: auto;
+}
+.wrapper::before{
+    content: "";
+    bottom: 0;
+    width: 100%;
+    height: calc(100% + 35px);
+    z-index: -1;
+    position: absolute;
+    background: linear-gradient(to top, rgba(0,0,0,0.7), transparent );
+}
+.video_controls .options{
+    width: 100%;
+}
+.video_controls .options:first-child{
+    justify-content: flex-start;
+}
+.video_controls .options:last-child{
+    justify-content: flex-end;
+}
+.video_controls{
+    padding: 5px 20px 10px;
+}
+.options button{
+    width: 40px;
+    height: 40px;
+    border: none;
+    color: #fff;
+    font-size: 19px;
+    cursor: pointer;
+    background: none;
+}
+.container video{
+    height: 100%;
+    width: 100%;
+}
+.options button :where(i, span){
+    width: 100%;
+    height: 100%;
+    line-height: 40px;
+}
+.options input{
+    height: 4px;
+    max-width: 75px;
+}
+.options .video_timer{
+    font-size: 14px;
+    color: #efefef;
+    margin-left: 15px;
+}
+.video_timer .separator{
+    font-size: 16px;
+    margin: 0 5px;
+    font-family: "open sans";
+}
+.video_timeline{
+    height: 7px;
+    width: 100%;
+    cursor: pointer;
 
 }
-.piano-keys .black.active{
-  box-shadow: -5px 5px 20px rgba(255, 255, 255, 0.1);
-  background: linear-gradient(to bottom, #000 , #434343);
-}
-.piano-keys .white{
-    width: 70px;
-    height: 230px;
-    border-radius: 8px;
-    border: 1px solid #000;
-    background: linear-gradient(#fff 96%, #eee 4%);
+.video_timeline .progress_area{
+    height: 3px;
+    background: rgba(255, 255, 255, 0.6);
+    position: relative;
 
 }
-.piano-keys .white.active{
-  box-shadow: -5px 5px 20px rgba(0, 0, 0, 0.02);
-  background: linear-gradient(to bottom, #fff 0%, #eee 100%);
-}
-.piano-keys span{
-  position: absolute;
-  bottom: 20px;
-  width: 100%;
-  font-size: 1.13rem;
-  text-align: center;
-}
-.piano-keys .key.hide span{
-  display: none;
-}
+.progress_area .progress_bar{
+    width: 0%;
+    height: 100%;
+    background: #2289ff;
+    position: relative;
 
-@media screen and (max-width: 615px) {
-  .piano-keys .key:nth-child(13),
-  .piano-keys .key:nth-child(14),
-  .piano-keys .key:nth-child(15),
-  .piano-keys .key:nth-child(16),
-  .piano-keys .key :nth-child(17) {
+}
+.progress_area .progress_bar::before{
+    content: "";
+    right: 0;
+    height: 13px;
+    width: 13px;
+    background: inherit;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    position: absolute;
+}
+.progress_area span{
+    position: absolute;
+    left: 50%;
+    font-size: 13px;
+    top: -25px;
+    color: #fff;
+    transform: translateX(-50%);
+}
+.progress_area span,  .progress_bar::before{
     display: none;
-  }
-  .piano-keys .white {
-    width: 50px;
-  }
+}
+.video_timeline:hover  span, 
+.video_timeline:hover .progress_area .progress_bar::before{
+    display: block;
+}
+
+.playback-content{
+    position: relative;
+}
+.playback-content .speed-options.show{
+    opacity: 1 !important;
+    pointer-events: auto;
+}
+.playback-content .speed-options{
+    position: absolute;
+    bottom: 40px;
+    left: -40px;
+    pointer-events: none;
+    list-style: none;
+    width: 95px;
+    background: #fff;
+    border-radius: 4px;
+    transition: opacity 0.13s ease;
+    opacity: 0;
+}
+
+.speed-options li{
+    cursor: pointer;
+    font-size: 14px;
+    padding: 5px 0 5px 15px;
+
+}
+.speed-options li.active{
+    color: #fff;
+    background: #2298ff;
 }
